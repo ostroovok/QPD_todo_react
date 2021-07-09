@@ -1,40 +1,41 @@
-import { func } from 'prop-types';
-import React from 'react';
-import styled from  "styled-components";
+import * as React from 'react';
 import './navbar.css'
 
-const Brand: React.FC<{text: string}> = (text) => {
+interface IHeaderMenuElement{
+    title: string;
+    link: string;
+}
+
+const HeaderMenuElement:React.FC<IHeaderMenuElement> = (props) =>{
+    return (
+        <a href={props.link}>
+            {props.title}
+        </a>
+    )
+}
+
+const Brand: React.FC<{text: string}> = (props) => {
     return (
         <div className="header-logo ">
-            {text.text}
+            {props.text}
         </div>
     );
 };
 
-const LinkListBar: React.FC<{text: string}> = () => {
-    return (
-        <div>
-            
-        </div>
-    );
-};
-
-const AddButton: React.FC<{text: string}> = () => {
-    return (
-        <div>
-            
-        </div>
-    );
-};
-
-function NavigationBar(){
+function Header(){
     return(
-        <div className="header">
+        <div className="header header-shadow">
             <Brand text='ToDo List'/>
-            
-            <AddButton text='123'/>
+            <div className="actionmenu">
+                <HeaderMenuElement {...{title: 'Добавить задачу', link: '321'}} />
+            </div>
+            <div className="scrollmenu">
+                <HeaderMenuElement {...{title: 'Задачи', link: '/tasks'}}/>
+                |
+                <HeaderMenuElement {...{title: 'Категории', link: '/categories'}}/>
+            </div>
         </div>
     );
 }
 
-export default NavigationBar;
+export default Header;
