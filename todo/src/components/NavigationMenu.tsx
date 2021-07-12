@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { NavLink } from 'react-router-dom';
 import './navbar.css'
 
 interface IHeaderMenuElement{
@@ -8,9 +9,9 @@ interface IHeaderMenuElement{
 
 const HeaderMenuElement:React.FC<IHeaderMenuElement> = (props) =>{
     return (
-        <a href={props.link}>
-            {props.title}
-        </a>
+        <span className="navLinks">
+            <NavLink to={props.link}>{props.title}</NavLink>
+        </span>
     )
 }
 
@@ -26,13 +27,15 @@ function Header(){
     return(
         <div className="header header-shadow">
             <Brand text='ToDo List'/>
-            <div className="actionmenu">
-                <HeaderMenuElement {...{title: 'Добавить задачу', link: '321'}} />
-            </div>
+
             <div className="scrollmenu">
-                <HeaderMenuElement {...{title: 'Задачи', link: '/tasks'}}/>
+                <span>
+                    <HeaderMenuElement {...{title: 'Задачи', link: '/tasks'}}/>
+                </span>
                 |
-                <HeaderMenuElement {...{title: 'Категории', link: '/categories'}}/>
+                <span>
+                    <HeaderMenuElement {...{title: 'Категории', link: '/categories'}}/>
+                </span>
             </div>
         </div>
     );

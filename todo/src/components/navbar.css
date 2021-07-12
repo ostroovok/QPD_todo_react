@@ -18,6 +18,7 @@
   div.scrollmenu {
     background-color:unset;
     overflow: auto;
+    color: white;
     white-space: nowrap;
     margin: auto auto auto 200px;
   }
@@ -26,17 +27,20 @@
     background-color:unset;
     position: absolute;
     right: 15px;
-    top: 10;
+    top: 17px;
   }
 
   div a {
     display: inline-block;
-    color: white;
+    color: #dce3ef;
     text-align: center;
     padding-left: 5px;
     padding-right: 5px;
     padding-top: 10px;
-    font-size: 20px;
-    text-decoration: none;
-    margin:unset;
+    font-size: 15pt;
+    margin: unset;
+  }
+
+  a:hover {
+    color: white;
   }
