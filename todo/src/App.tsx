@@ -6,18 +6,23 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
+  Redirect,
 } from "react-router-dom";
 
 function App() {
   return (
       <Router>
         <Switch>
+          <Route exact path="/">
+            <Tasks />
+          </Route>
           <Route path="/tasks">
             <Tasks />
           </Route>
           <Route path="/categories">
             <Categories />
           </Route>
+          <Redirect from="/" to="/tasks" />
         </Switch>
       </Router>
 
