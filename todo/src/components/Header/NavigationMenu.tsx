@@ -1,44 +1,39 @@
-import * as React from 'react';
-import { NavLink } from 'react-router-dom';
-import './navbar.css'
+import * as React from "react";
+import { NavLink } from "react-router-dom";
+import "./navbar.css";
 
-interface IHeaderMenuElement{
-    title: string;
-    link: string;
+interface IHeaderMenuElement {
+  title: string;
+  link: string;
 }
 
-const HeaderMenuElement:React.FC<IHeaderMenuElement> = (props) =>{
-    return (
-        <span className="navLinks">
-            <NavLink to={props.link}>{props.title}</NavLink>
-        </span>
-    )
-}
-
-const Brand: React.FC<{text: string}> = (props) => {
-    return (
-        <div className="header-logo ">
-            {props.text}
-        </div>
-    );
+const HeaderMenuElement: React.FC<IHeaderMenuElement> = ({ link, title }) => {
+  return (
+    <span className="navLinks">
+      <NavLink to={link} activeClassName="selected">
+        {title}
+      </NavLink>
+    </span>
+  );
 };
 
-function Header(){
-    return(
-        <div className="header header-shadow">
-            <Brand text='ToDo List'/>
+const Brand: React.FC<{ text: string }> = (props) => {
+  return <div className="header-logo ">{props.text}</div>;
+};
 
-            <div className="scrollmenu">
-                <span>
-                    <HeaderMenuElement {...{title: 'Задачи', link: '/tasks'}}/>
-                </span>
-                |
-                <span>
-                    <HeaderMenuElement {...{title: 'Категории', link: '/categories'}}/>
-                </span>
-            </div>
-        </div>
-    );
+function Header() {
+  return (
+    <div className="header header-shadow">
+      <Brand text="ToDo List" />
+
+      <div className="scrollmenu">
+        <HeaderMenuElement title="Задачи" link="/tasks" />
+        <span>|</span>
+
+        <HeaderMenuElement title="Категории" link="/categories" />
+      </div>
+    </div>
+  );
 }
 
 export default Header;

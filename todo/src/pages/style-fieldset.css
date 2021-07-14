@@ -1,0 +1,78 @@
+fieldset {
+  display: inline-flex;
+  font-size: 1em;
+  border: 2px solid #3f72af;
+  box-sizing: border-box;
+  border-radius: 4px;
+}
+fieldset.name1 {
+  width: auto;
+  line-height: 20px;
+  margin: 5px 10px;
+  min-width: 48%;
+}
+fieldset.name2{
+    display: flex;
+    width: auto;
+    line-height: 20px;
+    margin: 5px 10px;
+}
+fieldset.category {
+  width: 350px;
+  line-height: 25px;
+  margin: 5px 10px;
+  min-width: 45%;
+  flex-wrap: wrap;
+}
+fieldset.description {
+  width: 735px;
+  line-height: 80%;
+  margin: 5px 10px;
+  display: inline-table;
+}
+fieldset legend {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 20px;
+  display: flex;
+  align-items: center;
+  color: #3f72af;
+}
+fieldset input,
+select {
+  font-size: 12pt;
+  outline: none;
+  width: 100%;
+  background-color: #dce3ef;
+  border: none;
+}
+fieldset.category:hover,
+fieldset.name:hover,
+fieldset.description:hover {
+  border: 2px solid #257fea;
+}
+
+select {
+  width: 100%;
+  min-width: 45%;
+  color: grey;
+}
+select:required:invalid {
+  color: gray;
+}
+
+option {
+  color: #3f72af;
+  border: 2px solid #257fea;
+  border-radius: 2px;
+}
+
+option:hover {
+  background-color: linear-gradient(
+      0deg,
+      rgba(37, 127, 234, 0.3),
+      rgba(37, 127, 234, 0.3)
+    ),
+    #BFCBE3;
+}

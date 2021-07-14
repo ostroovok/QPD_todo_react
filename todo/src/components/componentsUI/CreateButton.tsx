@@ -1,36 +1,31 @@
 import React from "react";
 import Modal from "../Modals/Modal";
-import { IModalProps } from "../Modals/IModalProps";
 import "./style-buttons.css";
 import { useModal } from "../Modals/useModal";
 
-const element = (
-  <div>
-    <p>ddtlbnt</p>
-    <input></input>
-  </div>
-);
-
-export const CreateButton: React.FC<{ title: string }> = ({
-  title,
-  children,
-}) => {
+export const CreateButton: React.FC<{
+  buttonTitle: string;
+  title: string;
+  children: JSX.Element;
+}> = ({ buttonTitle, title, children }) => {
   const { isOpen, toggle } = useModal();
 
-  const onConfirm = () => toggle();
+  const onSubmit = () => toggle();
   const onCancel = () => toggle();
 
   return (
     <>
       <button className="button1" onClick={toggle}>
-        {title}
+        {buttonTitle}
       </button>
       <Modal
-        title="title"
-        children={<div>{element}</div>}
+        title={title}
+        firstbtnTitle="Создать"
+        secondbtnTitle="Закрыть"
+        children={<div>{children}</div>}
         isOpen={isOpen}
         onCancel={onCancel}
-        onSubmit={onConfirm}
+        onSubmit={onSubmit}
       />
     </>
   );

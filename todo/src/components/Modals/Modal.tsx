@@ -1,29 +1,23 @@
 import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
 import { IModalProps } from "./IModalProps";
-import './Modal.css'
+import "./Modal.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 const Modal: React.FC<IModalProps> = ({
   title,
+  firstbtnTitle,
+  secondbtnTitle,
   isOpen,
   onCancel,
   onSubmit,
   children,
 }) => {
-  const onKeyDown = (event: KeyboardEvent) => {
-    if (event.keyCode === 27 && isOpen) {
-        onCancel();
-    }
-  };
-
   useEffect(() => {
     isOpen
       ? (document.body.style.overflow = "hidden")
       : (document.body.style.overflow = "unset");
-    document.addEventListener("keydown", onKeyDown, false);
-    return () => {
-      document.removeEventListener("keydown", onKeyDown, false);
-    };
   }, [isOpen]);
 
   const element = (
@@ -31,18 +25,26 @@ const Modal: React.FC<IModalProps> = ({
       <div className="modalWindow">
         <div className="modalHeader">
           <div className="modalTitle">{title}</div>
-          {/* <Icon name="times" onClick={prop.onCancel} /> */}
+          <div>
+            <button onClick={onCancel}>
+              <FontAwesomeIcon icon={faTimes} color="#3F72AF" size="2x" />
+            </button>
+          </div>
         </div>
         <div className="modalBody">{children}</div>
         <div className="modalFooter">
-          <button onClick={onCancel}>Cancel</button>
-          <button onClick={onSubmit}>Submit</button>
+          <button className="modalFooter-button-onSubmit" onClick={onSubmit}>
+            {firstbtnTitle}
+          </button>
+          <button className="modalFooter-button-onClose" onClick={onCancel}>
+            {secondbtnTitle}
+          </button>
         </div>
       </div>
     </div>
   );
 
-  return isOpen ? ReactDOM.createPortal(element, document.body): null;
+  return isOpen ? ReactDOM.createPortal(element, document.body) : null;
 };
 
 export default Modal;

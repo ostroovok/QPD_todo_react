@@ -44,3 +44,11 @@
   a:hover {
     color: white;
   }
+
+  .scrollmenu span{
+    font-size: 25px;
+  }
+
+  .selected:not(.active){
+    color:#8FB6FF;
+  }
