@@ -23,7 +23,7 @@ const ListElement: React.FC<IListElement> = ({
           <ChangeButton />
           <DeleteButton
             title="Удаление ..."
-            children={<div>Вы уверены, что хотите удалить "{title}"?</div>}
+            children={<div className="list-element-title">Вы уверены, что хотите удалить "{title}"?</div>}
           />
         </span>
       </div>

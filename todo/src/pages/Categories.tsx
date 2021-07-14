@@ -35,6 +35,12 @@ function Categories(){
         { title: "Категория1", description: "Описание"},
         { title: "Категория2", description: "Описание"},
         { title: "Категория2", description: "Описание"},
+        { title: "Категория13", description: "Описание"},
+        { title: "Категория11", description: "Описание"},
+        { title: "Категория1", description: "Описание"},
+        { title: "Категория1", description: "Описание"},
+        { title: "Категория2", description: "Описание"},
+        { title: "Категория2", description: "Описание"},
       ];
     
       return (

@@ -19,9 +19,9 @@ const element = (
           <legend>Категория</legend>
           <select >
             <option value="" selected >Выберите категорию</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
+            <option value="2">Категория2</option>
+            <option value="3">Категория3</option>
+            <option value="4">Категория4</option>
           </select>
         </fieldset>
         </span>
