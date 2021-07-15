@@ -23,7 +23,11 @@ const ListElement: React.FC<IListElement> = ({
           <ChangeButton />
           <DeleteButton
             title="Удаление ..."
-            children={<div className="list-element-title">Вы уверены, что хотите удалить "{title}"?</div>}
+            children={
+              <div className="list-element-title">
+                Вы уверены, что хотите удалить "{title}"?
+              </div>
+            }
           />
         </span>
       </div>
@@ -31,12 +35,8 @@ const ListElement: React.FC<IListElement> = ({
   );
 };
 
-interface IList {
-  list: IListElement[];
-}
-
-const ItemList: React.FC<IList> = (list: IList) => {
-  let JSXlist = list.list.map(
+const ItemList = (props: { list: IListElement[] }): JSX.Element => {
+  let JSXlist = props.list.map(
     ({ title, attachment, description }: IListElement, index) => {
       return (
         <ListElement

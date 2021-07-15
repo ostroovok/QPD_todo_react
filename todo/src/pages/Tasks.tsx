@@ -1,10 +1,13 @@
+import React, { useState } from 'react';
 import Header from "../components/Header/NavigationMenu";
 import ItemList from "../components/ItemList/ItemList";
 import { CreateButton } from "../components/componentsUI/CreateButton";
+import { useDispatch, useSelector } from 'react-redux';
 import "./style-pages.css";
 import "./style-fieldset.css";
 
 import { IListElement } from "../components/ItemList/IListElement";
+import { RootState, setStore } from '../store/store';
 
 const element = (
   <>
@@ -37,13 +40,7 @@ const element = (
 );
 
 function Tasks() {
-  const list: IListElement[] = [
-    { title: "Задача21", description: "Описание", attachment: "Категория1" },
-    { title: "Задача2", description: "Описание", attachment: "" },
-    { title: "Задача4", description: "Описание", attachment: "Категория1" },
-    { title: "Задача12", description: "Описание", attachment: "" },
-    { title: "Задача9", description: "Описание", attachment: "" },
-  ];
+  //const list = useSelector((state: RootState) => state.todos.tasks)
 
   return (
     <div>
