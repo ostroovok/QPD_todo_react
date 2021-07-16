@@ -1,6 +1,6 @@
 
 export interface IModalProps{
-    title: string;
+    modalTitle: string;
     firstbtnTitle: string;
     secondbtnTitle: string;
     isOpen: boolean;

@@ -1,38 +1,21 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IListElement } from "../components/ItemList/IListElement";
 
-const initialState = {
-  tasks: [
-  { title: "Задача21", description: "Описание", attachment: "Категория1" },
-  { title: "Задача2", description: "Описание", attachment: "" },
-  { title: "Задача4", description: "Описание", attachment: "Категория1" },
-  { title: "Задача12", description: "Описание", attachment: "" },
-  { title: "Задача9", description: "Описание", attachment: "" },
-] as IListElement[],
-  fetchingState: "none",
-  creatingState: "none",
-  loadingState: "none",
-  error: null,
-};
-
 const tasksSlice = createSlice({
   name: "tasksSlice",
-  initialState,
+  initialState: {
+    list: [
+      { title: "Задача21", description: "Описание", attachment: "Категория1" },
+      { title: "Задача2", description: "Описание", attachment: "" },
+      { title: "Задача4", description: "Описание", attachment: "Категория1" },
+      { title: "Задача12", description: "Описание", attachment: "" },
+      { title: "Задача9", description: "Описание", attachment: "" },
+    ] as IListElement[],
+  },
   reducers: {
-    // tasksFetching: (state) => {
-    //   state.fetchingState = "requesting";
-    // },
-    // tasksFetched: (state, action) => {
-    //   state.list = action.payload.list;
-    //   state.fetchingState = "success";
-    // },
-    // tasksFetchingError: (state, action) => {
-    //   state.fetchingState = "failed";
-    //   state.error = action.payload.error;
-    // },
     del(state, action: PayloadAction<IListElement>) {
       let elementToDelete = action.payload;
-      state.tasks = state.tasks.filter((currentElement) => {
+      state.list = state.list.filter((currentElement) => {
         if (
           elementToDelete.title !== currentElement.title ||
           elementToDelete.description !== currentElement.description ||
@@ -42,8 +25,10 @@ const tasksSlice = createSlice({
         }
       });
     },
-    add(state, action: PayloadAction<IListElement>) {
-      state.tasks.push(action.payload);
+    addTask(state, action: PayloadAction<IListElement>) {
+      console.log(1);
+      
+      state.list.push(action.payload);
     },
     change(state, action: PayloadAction<number>) {
       state = state;
@@ -51,11 +36,5 @@ const tasksSlice = createSlice({
   },
 });
 
-export const { del, add, change } = tasksSlice.actions;
+export const { del, addTask, change } = tasksSlice.actions;
 export default tasksSlice.reducer;
-
-// { title: "Задача21", description: "Описание", attachment: "Категория1" },
-// { title: "Задача2", description: "Описание", attachment: "" },
-// { title: "Задача4", description: "Описание", attachment: "Категория1" },
-// { title: "Задача12", description: "Описание", attachment: "" },
-// { title: "Задача9", description: "Описание", attachment: "" },

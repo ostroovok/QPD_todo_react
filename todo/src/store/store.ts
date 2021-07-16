@@ -1,12 +1,17 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import * as categorySlices from './categorySlices'
+import categorySlices from "./categorySlices";
 import tasksSlices from "./tasksSlices";
 
-
-export const setStore = configureStore({
-    reducer: {
-        todos: tasksSlices
-    }
+const rootReducer = combineReducers({
+  tasks: tasksSlices,
+  categories: categorySlices,
 });
 
-export type RootState = ReturnType<typeof tasksSlices>
+export const store = configureStore({
+  reducer: {
+    todos: rootReducer,
+  },
+});
+
+export type RootState = ReturnType<typeof store.getState>;
+export default rootReducer;

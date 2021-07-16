@@ -3,21 +3,50 @@ import { useDispatch } from "react-redux";
 import Modal from "../Modals/Modal";
 import "./style-buttons.css";
 import { useModal } from "../Modals/useModal";
-import { add } from '../../store/tasksSlices'
-import { Action } from "redux";
+import { addTask } from "../../store/tasksSlices";
+import { addCategory } from "../../store/categorySlices";
+import { IListElement } from "../ItemList/IListElement";
 
 export const CreateButton: React.FC<{
   buttonTitle: string;
-  title: string;
+  modalTitle: string;
   children: JSX.Element;
-}> = ({ buttonTitle, title, children }) => {
+  content: IListElement;
+}> = ({
+  buttonTitle,
+  modalTitle,
+  children,
+  content = {
+    title: "invalid title",
+    attachment: "",
+    description: "",
+    type: "",
+  },
+}) => {
   const { isOpen, toggle } = useModal();
-  //const [value, setValue] = useState('');
   const dispatch = useDispatch();
 
   const onSubmit = () => {
     toggle();
-    dispatch(add({title:"new",attachment:"new", description:"new"}))
+
+    if (content.type === "task") {
+      dispatch(
+        addTask({
+          title: content.title,
+          attachment: content.attachment,
+          description: content.description,
+          type: content.type,
+        })
+      );
+    } else if (content.type === "category") {
+      dispatch(
+        addCategory({
+          title: content.title,
+          description: content.description,
+          type: content.type,
+        })
+      );
+    }
   };
   const onCancel = () => toggle();
 
@@ -27,7 +56,7 @@ export const CreateButton: React.FC<{
         {buttonTitle}
       </button>
       <Modal
-        title={title}
+        modalTitle={modalTitle}
         firstbtnTitle="Создать"
         secondbtnTitle="Закрыть"
         children={<div>{children}</div>}

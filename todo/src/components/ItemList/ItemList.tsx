@@ -18,8 +18,8 @@ const ListElement: React.FC<IListElement> = ({
             <span className="list-element-attachment">{attachment}</span>
           </span>
         </div>
-        <span className="list-element-description">{description}</span>
-        <span className="actionButton">
+        <div className="list-element-description">{description}</div>
+        <div className="actionButton">
           <ChangeButton />
           <DeleteButton
             title="Удаление ..."
@@ -29,7 +29,7 @@ const ListElement: React.FC<IListElement> = ({
               </div>
             }
           />
-        </span>
+        </div>
       </div>
     </li>
   );
