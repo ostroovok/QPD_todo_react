@@ -48,3 +48,145 @@ const Modal: React.FC<IModalProps> = ({
 };
 
 export default Modal;
+
+
+// const DeleteButton: React.FC<{
+//   modalTitle: string;
+//   children: JSX.Element;
+//   item: IListElement;
+//   clickHandler: (item: IListElement) => void;
+// }> = ({
+//   modalTitle,
+//   children,
+//   item = {
+//     itemTitle: <></>,
+//     description: "",
+//     type: "",
+//   },
+//   clickHandler,
+// }) => {
+//   const { isOpen, toggle } = useModal();
+//   const dispatch = useDispatch();
+
+//   const onSubmit = () => {
+//     toggle();
+
+//     dispatch(
+//       clickHandler({
+//         itemTitle: item.itemTitle,
+//         description: item.description,
+//         type: item.type,
+//       })
+//     );
+//   };
+//   const onCancel = () => toggle();
+//   return (
+//     <span>
+//       <button className="button1 button2" onClick={toggle}>
+//         <FontAwesomeIcon icon={faTrash} color="#3F72AF" size="lg" />
+//       </button
+//       <Modal
+//         modalTitle={modalTitle}
+//         firstbtnTitle="Да"
+//         secondbtnTitle="Нет"
+//         children={<div>{children}</div>}
+//         isOpen={isOpen}
+//         onCancel={onCancel}
+//         onSubmit={onSubmit}
+//       />
+//     </span>
+//   );
+// };
+
+
+
+ /* <CreateButton
+          buttonTitle="Добавить категорию"
+          modalTitle="Создание категории"
+          children={
+            <>
+              <form>
+                <div>
+                  <fieldset className="name2">
+                    <legend>Имя</legend>
+                    <input
+                      placeholder="Введите имя задачи"
+                      value={itemTitle}
+                      onInput={handleTitleChange(setItemTitle)}
+                    ></input>
+                  </fieldset>
+                </div>
+                <div>
+                  <fieldset className="description">
+                    <legend>Описание</legend>
+                    <input
+                      placeholder="Введите описание задачи"
+                      value={itemDescription}
+                      onInput={handleDecriptionChange(setItemDescription)}
+                    ></input>
+                  </fieldset>
+                </div>
+              </form>
+            </>
+          }
+          item={{
+            itemTitle: <TaskTitle name={itemTitle}/>,
+            description: itemDescription,
+            type: 'category'
+          }}
+          clickHandler = {addCategory}
+        />
+      </div> */
+
+      // <div className="actionmenu">
+      //   <CreateButton
+      //     buttonTitle="Добавить задачу"
+      //     modalTitle="Создание задачи"
+      //     children={
+      //       <>
+      //         <form>
+      //           <div>
+      //             <fieldset className="name1">
+      //               <legend>Имя</legend>
+      //               <input
+      //                 placeholder="Введите имя задачи"
+      //                 value={itemTitle}
+      //                 onInput={handleTitleChange(setItemTitle)}
+      //               ></input>
+      //             </fieldset>
+      //             <span>
+      //               <fieldset className="category">
+      //                 <legend>Категория</legend>
+      //                 <select
+      //                   value={itemCategory}
+      //                   onInput={handleAttachementChange(setItemAttachment)}
+      //                 >
+      //                   <option value="default" selected>
+      //                     Выберите категорию
+      //                   </option>
+      //                   {categoriesList}
+      //                 </select>
+      //               </fieldset>
+      //             </span>
+      //           </div>
+      //           <div>
+      //             <fieldset className="description">
+      //               <legend>Описание</legend>
+      //               <input
+      //                 placeholder="Введите описание задачи"
+      //                 value={itemDescription}
+      //                 onInput={handleDecriptionChange(setItemDescription)}
+      //               ></input>
+      //             </fieldset>
+      //           </div>
+      //         </form>
+      //       </>
+      //     }
+      //     item={{
+      //       itemTitle: <TaskTitle name={itemTitle} category={itemCategory} />,
+      //       description: itemDescription,
+      //       type: "task",
+      //     }}
+      //     clickHandler={addTask}
+      //   />
+      // </div>

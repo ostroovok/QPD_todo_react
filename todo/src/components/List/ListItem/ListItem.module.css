@@ -1,0 +1,44 @@
+.list {
+  position: flex;
+  top: 7.5%;
+  max-width: 55%;
+  padding-left: 22%;
+}
+
+.list-element div {
+  min-height: 20%;
+}
+
+.list-element-box {
+  margin: 0 10px 10px 10px;
+}
+
+.list-element-description {
+  color: rgb(131, 126, 126);
+  margin: 7px auto;
+  display: block;
+  overflow-wrap: break-word;
+  padding-left: 5px;
+  padding-right: 10%;
+}
+
+li {
+  border-bottom: 2px solid #3d73b0;
+}
+
+li:hover {
+  background-color: #b7cfef;
+  color: white;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.actionButton {
+  position: relative;
+  display: inline-flex;
+  float: right;
+  bottom: 40px;
+  padding-top: 0px;
+}

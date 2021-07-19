@@ -1,0 +1,9 @@
+.list-element-title {
+    padding-right: 15px;
+    padding-left: 5px;
+    font: bolder;
+    font-size: 15pt;
+    color: black;
+    display: inline-flex;
+    margin: 7px auto;
+  }

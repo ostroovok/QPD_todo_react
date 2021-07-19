@@ -7,7 +7,4 @@ export const handleInputChange =
 export const handleSelectChange =
   (fn: (value: React.SetStateAction<string>) => void) =>
   (event: React.FormEvent<HTMLSelectElement>) =>
-    fn(
-      event.currentTarget.options[event.currentTarget.options.selectedIndex]
-        .text
-    );
+    fn(event.currentTarget.options[event.currentTarget.options.selectedIndex].text);
