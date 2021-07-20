@@ -33,21 +33,17 @@ const ListItem: React.FC<ListItemProps> = ({
     <li className={styles["list-element"]}>
       <div className={styles["list-element-box"]}>
         {title}
-        <div>
-          <div className={styles["list-element-description"]}>
-            {description}
-          </div>
-          <div className={styles["actionButton"]}>
-            <ChangeButton
-              title={changeButtonTitle}
-              onClick={onChangeClickHandler}
-            />
-            <DeleteButton
-              title={deleteButtonTitle}
-              onClick={onDeleteClickHandler}
-            />
-          </div>
-        </div>
+        <div className={styles["list-element-description"]}>{description}</div>
+      </div>
+      <div className={styles["actionButton"]}>
+        <ChangeButton
+          title={changeButtonTitle}
+          onClick={onChangeClickHandler}
+        />
+        <DeleteButton
+          title={deleteButtonTitle}
+          onClick={onDeleteClickHandler}
+        />
       </div>
     </li>
   );

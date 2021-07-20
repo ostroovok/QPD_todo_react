@@ -1,0 +1,10 @@
+.list {
+    position: flex;
+    top: 7.5%;
+    max-width: 55%;
+    padding-left: 22%;
+  }
+  
+  ul {
+    list-style-type: none;
+  }

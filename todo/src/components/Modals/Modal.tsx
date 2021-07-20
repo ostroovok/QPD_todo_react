@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import ReactDOM from "react-dom";
 import { IModalProps } from "./IModalProps";
 import "./Modal.css";
@@ -9,17 +9,10 @@ const Modal: React.FC<IModalProps> = ({
   modalTitle: title,
   firstbtnTitle,
   secondbtnTitle,
-  isOpen,
   onCancel,
   onSubmit,
   children,
 }) => {
-  useEffect(() => {
-    isOpen
-      ? (document.body.style.overflow = "hidden")
-      : (document.body.style.overflow = "unset");
-  }, [isOpen]);
-
   const element = (
     <div className="modalOverlay">
       <div className="modalWindow">
@@ -44,11 +37,10 @@ const Modal: React.FC<IModalProps> = ({
     </div>
   );
 
-  return isOpen ? ReactDOM.createPortal(element, document.body) : null;
+  return ReactDOM.createPortal(element, document.body);
 };
 
 export default Modal;
-
 
 // const DeleteButton: React.FC<{
 //   modalTitle: string;
@@ -98,9 +90,7 @@ export default Modal;
 //   );
 // };
 
-
-
- /* <CreateButton
+/* <CreateButton
           buttonTitle="Добавить категорию"
           modalTitle="Создание категории"
           children={
@@ -138,55 +128,55 @@ export default Modal;
         />
       </div> */
 
-      // <div className="actionmenu">
-      //   <CreateButton
-      //     buttonTitle="Добавить задачу"
-      //     modalTitle="Создание задачи"
-      //     children={
-      //       <>
-      //         <form>
-      //           <div>
-      //             <fieldset className="name1">
-      //               <legend>Имя</legend>
-      //               <input
-      //                 placeholder="Введите имя задачи"
-      //                 value={itemTitle}
-      //                 onInput={handleTitleChange(setItemTitle)}
-      //               ></input>
-      //             </fieldset>
-      //             <span>
-      //               <fieldset className="category">
-      //                 <legend>Категория</legend>
-      //                 <select
-      //                   value={itemCategory}
-      //                   onInput={handleAttachementChange(setItemAttachment)}
-      //                 >
-      //                   <option value="default" selected>
-      //                     Выберите категорию
-      //                   </option>
-      //                   {categoriesList}
-      //                 </select>
-      //               </fieldset>
-      //             </span>
-      //           </div>
-      //           <div>
-      //             <fieldset className="description">
-      //               <legend>Описание</legend>
-      //               <input
-      //                 placeholder="Введите описание задачи"
-      //                 value={itemDescription}
-      //                 onInput={handleDecriptionChange(setItemDescription)}
-      //               ></input>
-      //             </fieldset>
-      //           </div>
-      //         </form>
-      //       </>
-      //     }
-      //     item={{
-      //       itemTitle: <TaskTitle name={itemTitle} category={itemCategory} />,
-      //       description: itemDescription,
-      //       type: "task",
-      //     }}
-      //     clickHandler={addTask}
-      //   />
-      // </div>
+// <div className="actionmenu">
+//   <CreateButton
+//     buttonTitle="Добавить задачу"
+//     modalTitle="Создание задачи"
+//     children={
+//       <>
+//         <form>
+//           <div>
+//             <fieldset className="name1">
+//               <legend>Имя</legend>
+//               <input
+//                 placeholder="Введите имя задачи"
+//                 value={itemTitle}
+//                 onInput={handleTitleChange(setItemTitle)}
+//               ></input>
+//             </fieldset>
+//             <span>
+//               <fieldset className="category">
+//                 <legend>Категория</legend>
+//                 <select
+//                   value={itemCategory}
+//                   onInput={handleAttachementChange(setItemAttachment)}
+//                 >
+//                   <option value="default" selected>
+//                     Выберите категорию
+//                   </option>
+//                   {categoriesList}
+//                 </select>
+//               </fieldset>
+//             </span>
+//           </div>
+//           <div>
+//             <fieldset className="description">
+//               <legend>Описание</legend>
+//               <input
+//                 placeholder="Введите описание задачи"
+//                 value={itemDescription}
+//                 onInput={handleDecriptionChange(setItemDescription)}
+//               ></input>
+//             </fieldset>
+//           </div>
+//         </form>
+//       </>
+//     }
+//     item={{
+//       itemTitle: <TaskTitle name={itemTitle} category={itemCategory} />,
+//       description: itemDescription,
+//       type: "task",
+//     }}
+//     clickHandler={addTask}
+//   />
+// </div>

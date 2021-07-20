@@ -1,12 +1,5 @@
-.list {
-  position: flex;
-  top: 7.5%;
-  max-width: 55%;
-  padding-left: 22%;
-}
-
 .list-element div {
-  min-height: 20%;
+  min-height: 25px;
 }
 
 .list-element-box {
@@ -31,14 +24,7 @@ li:hover {
   color: white;
 }
 
-ul {
-  list-style-type: none;
-}
-
 .actionButton {
-  position: relative;
-  display: inline-flex;
+  display: flex;
   float: right;
-  bottom: 40px;
-  padding-top: 0px;
 }

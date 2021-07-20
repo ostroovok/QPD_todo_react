@@ -3,19 +3,20 @@
   color: white;
   border: none;
   font-size: 13pt;
-  padding-top: 12px;
   cursor: pointer;
+  display: flex;
 }
 
 .button-delete{
   position: relative;
-  bottom: 20px;
+  display: flex;
+  bottom: 50px;
   right: 5px;
 }
 
 .button-edit{
-  text-align: left;
+  display: inline-flex;
   position: relative;
-  left: 83%;
-  bottom: 20px;
+  bottom: 50px;
+  right: 5px;
 }

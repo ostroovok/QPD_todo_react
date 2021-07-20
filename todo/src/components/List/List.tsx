@@ -1,4 +1,5 @@
 import React from "react";
+import styles from './List.module.css';
 import { ListItem } from "./ListItem";
 
 interface ListProps {
@@ -18,7 +19,7 @@ const List: React.FC<ListProps> = ({
 }) => {
   return (
     <div>
-      <ul className="list">
+      <ul className={styles["list"]}>
         {items.map((item) => {
           return (
             <ListItem

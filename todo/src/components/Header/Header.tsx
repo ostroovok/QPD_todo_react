@@ -1,5 +1,5 @@
 import * as React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import "./navbar.css";
 
 interface IHeaderMenuElement {
@@ -22,6 +22,8 @@ const Brand: React.FC<{ text: string }> = (props) => {
 };
 
 function Header() {
+  const location = useLocation();
+
   return (
     <div className="header header-shadow">
       <Brand text="ToDo List" />
@@ -31,6 +33,15 @@ function Header() {
         <span>|</span>
 
         <HeaderMenuElement title="Категории" link="/categories" />
+      </div>
+
+      <div>
+        {location.pathname.startsWith("/categories") && (
+          <NavLink to="/categories/new">Добавить категорию</NavLink>
+        )}
+        {location.pathname.startsWith("/tasks") && (
+          <NavLink to="/tasks/new">Добавить задачу</NavLink>
+        )}
       </div>
     </div>
   );

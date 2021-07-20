@@ -16,16 +16,13 @@ function App() {
         <Header />
         
         <Switch>
-          <Route exact path="/">
-            <Tasks />
-          </Route>
           <Route path="/tasks">
             <Tasks />
           </Route>
           <Route path="/categories">
             <Categories />
           </Route>
-          <Redirect from="/" to="/tasks" />
+          <Redirect to="/tasks" />
         </Switch>
       </Router>
     </div>

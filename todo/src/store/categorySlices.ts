@@ -28,9 +28,9 @@ const categorySlice = createSlice({
       action: PayloadAction<{ title: string; description: string }>
     ) {
       const { description, title } = action.payload;
-      state.list.push({ id: state.list.length, description, title });
+      state.list.push({ id: state.list.length + 1, description, title });
     },
-    change(state, action: PayloadAction<Category>) {
+    changeCategory(state, action: PayloadAction<Category>) {
       const { description, id, title } = action.payload;
 
       const category = state.list.find((c) => c.id === id);
@@ -42,5 +42,6 @@ const categorySlice = createSlice({
   },
 });
 
-export const { delCategory, addCategory, change } = categorySlice.actions;
+export const { delCategory, addCategory, changeCategory } =
+  categorySlice.actions;
 export default categorySlice.reducer;
