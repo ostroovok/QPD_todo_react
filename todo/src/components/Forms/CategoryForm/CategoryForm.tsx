@@ -1,4 +1,5 @@
 import { ChangeEventHandler } from "react";
+import styles from '../Forms.module.css'
 
 interface CategoryFormProps {
   title: string;
@@ -14,7 +15,7 @@ const CategoryForm: React.FC<CategoryFormProps> = ({
   return (
     <form>
       <div>
-        <fieldset className="name2">
+        <fieldset className={styles["name2"]}>
           <legend>Имя</legend>
           <input
             id="title"
@@ -26,7 +27,7 @@ const CategoryForm: React.FC<CategoryFormProps> = ({
         </fieldset>
       </div>
       <div>
-        <fieldset className="description">
+        <fieldset className={styles["description"]}>
           <legend>Описание</legend>
           <input
             id="description"

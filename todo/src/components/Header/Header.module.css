@@ -1,7 +1,10 @@
   .header {
     overflow: hidden;
+    display: inline-flex;
     background-color: #3d73b0;
     padding: 15px 20px;
+    box-shadow: 0 5px 10px rgba(36, 33, 33, 0.479);
+    width: 100%;
   }
   
   .header-logo {
@@ -9,34 +12,35 @@
     padding-top: 0px;
     font-size: 32px;
     float: left;
-  }
-
-  .header-shadow {
-    box-shadow: 0 5px 10px rgba(36, 33, 33, 0.479);
+    display: inline-flex;
   }
 
   div.scrollmenu {
     background-color:unset;
+    display: inline-flex;
     overflow: auto;
     color: white;
     white-space: nowrap;
-    margin: auto auto auto 200px;
+    margin: auto auto auto 3%;
   }
   
-  div.actionmenu {
-    background-color:unset;
-    position: absolute;
-    right: 15px;
-    top: 17px;
+  div.actionmenu a {
+    float: right;
+    font-size: 14pt;
+    text-decoration: none;
+    display: inline-flex;
+    color: #dce3ef;
+    margin-right: 40%;
+    margin-top: 6%;
+    min-width: max-content;
   }
 
-  div a {
-    display: inline-block;
+  div.scrollmenu a {
+    display: inline-flex;
     color: #dce3ef;
     text-align: center;
     padding-left: 5px;
     padding-right: 5px;
-    padding-top: 10px;
     margin: unset;
     font-size: 22px;
   }

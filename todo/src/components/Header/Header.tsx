@@ -1,6 +1,6 @@
 import * as React from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import "./navbar.css";
+import styles from "./Header.module.css";
 
 interface IHeaderMenuElement {
   title: string;
@@ -9,8 +9,8 @@ interface IHeaderMenuElement {
 
 const HeaderMenuElement: React.FC<IHeaderMenuElement> = ({ link, title }) => {
   return (
-    <span className="navLinks">
-      <NavLink to={link} activeClassName="selected">
+    <span className={styles["navLinks"]}>
+      <NavLink to={link} activeClassName={styles["selected"]}>
         {title}
       </NavLink>
     </span>
@@ -18,24 +18,24 @@ const HeaderMenuElement: React.FC<IHeaderMenuElement> = ({ link, title }) => {
 };
 
 const Brand: React.FC<{ text: string }> = (props) => {
-  return <div className="header-logo ">{props.text}</div>;
+  return <div className={styles["header-logo"]}>{props.text}</div>;
 };
 
 function Header() {
   const location = useLocation();
 
   return (
-    <div className="header header-shadow">
+    <div className={styles["header"]}>
       <Brand text="ToDo List" />
 
-      <div className="scrollmenu">
+      <div className={styles["scrollmenu"]}>
         <HeaderMenuElement title="Задачи" link="/tasks" />
         <span>|</span>
 
         <HeaderMenuElement title="Категории" link="/categories" />
       </div>
 
-      <div>
+      <div className={styles["actionmenu"]}>
         {location.pathname.startsWith("/categories") && (
           <NavLink to="/categories/new">Добавить категорию</NavLink>
         )}

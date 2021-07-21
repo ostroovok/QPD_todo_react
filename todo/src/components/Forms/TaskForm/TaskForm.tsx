@@ -1,4 +1,5 @@
 import { ChangeEventHandler } from "react";
+import styles from '../Forms.module.css'
 
 interface TaskFormProps {
   title: string;
@@ -20,7 +21,7 @@ const TaskForm: React.FC<TaskFormProps> = ({
   return (
     <form>
       <div>
-        <fieldset className="name1">
+        <fieldset className={styles["name1"]}>
           <legend>Имя</legend>
           <input
             id="title"
@@ -31,7 +32,7 @@ const TaskForm: React.FC<TaskFormProps> = ({
           ></input>
         </fieldset>
         <span>
-          <fieldset className="category">
+          <fieldset className={styles["category"]}>
             <legend>Категория</legend>
             <select
                 id="category"
@@ -55,7 +56,7 @@ const TaskForm: React.FC<TaskFormProps> = ({
         </span>
       </div>
       <div>
-        <fieldset className="description">
+        <fieldset className={styles["description"]}>
           <legend>Описание</legend>
           <input
             id="description"

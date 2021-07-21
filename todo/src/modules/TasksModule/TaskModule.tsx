@@ -1,13 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { TaskTitle } from "../../pages/Tasks/TaskTitle";
-import { List } from "../../components";
+import { List, Modal } from "../../components";
 import { RootState } from "../../store/store";
-import { Task } from "../../store/tasksSlices";
+import { delTask, Task } from "../../store/tasksSlices";
 import { useHistory } from "react-router-dom";
 
 const TaskModule: React.FC = () => {
   const history = useHistory();
+  const [isOpen, setIsOpen] = useState(false);
+  const [taskId, setTaskId] = useState<number | undefined>(undefined);
+  const dispatch = useDispatch();
 
   const [tasks, categories] = useSelector((state: RootState) => [
     state.todos.tasks.list,
@@ -27,20 +30,43 @@ const TaskModule: React.FC = () => {
   });
 
   const onChangeClickHandler = (rowId: number) => {
-    history.push(`/tasks/${rowId}`)
+    history.push(`/tasks/${rowId}`);
   };
   const onDeleteClickHandler = (rowId: number) => {
-    history.push(`/tasks/del/${rowId}`)
+    setTaskId(rowId);
+    setIsOpen(true);
   };
 
   return (
-    <List
-      items={items}
-      changeButtonTitle="Изменить задачу"
-      onChangeClick={onChangeClickHandler}
-      deleteButtonTitle="Удалить задачу"
-      onDeleteClick={onDeleteClickHandler}
-    />
+    <>
+      <List
+        items={items}
+        changeButtonTitle="Изменить задачу"
+        onChangeClick={onChangeClickHandler}
+        deleteButtonTitle="Удалить задачу"
+        onDeleteClick={onDeleteClickHandler}
+      />
+
+      {isOpen && (
+        <Modal
+          firstbtnTitle="Да"
+          secondbtnTitle="Нет"
+          modalTitle="Удаление задачи"
+          onCancel={() => {
+            setTaskId(undefined);
+            setIsOpen(false);
+          }}
+          onSubmit={() => {
+            dispatch(delTask(Number(taskId)));
+
+            setTaskId(undefined);
+            setIsOpen(false);
+          }}
+        >
+          <div>Вы действительно хотите удалить задачу?</div>
+        </Modal>
+      )}
+    </>
   );
 };
 

@@ -7,17 +7,19 @@ import { useHistory, useRouteMatch } from "react-router-dom";
 import { Modal, TaskForm } from "../../components";
 import { RootState } from "../../store/store";
 import { addTask, changeTask } from "../../store/tasksSlices";
+import { TaskServices } from "../../services/TaskServices";
 
 const TaskFormModule: React.FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
+
+  const taskServices = new TaskServices();
 
   const {
     params: { id },
   } = useRouteMatch<{ id: string }>();
 
   const task = useSelector((state: RootState) => {
-
     if (id === "new") {
       return {
         title: "",
@@ -66,9 +68,14 @@ const TaskFormModule: React.FC = () => {
     history.push("./tasks");
   }, [history]);
 
+  taskServices.initialize();
+
   const onSubmitHandler = useCallback(() => {
     if (id === "new") {
       dispatch(addTask({ title, description, category }));
+
+      taskServices.insert({title: title, categoryId: category, description: description});
+
     } else {
       dispatch(
         changeTask({
@@ -80,8 +87,10 @@ const TaskFormModule: React.FC = () => {
       );
     }
 
+
     history.push("./tasks");
   }, [history, description, id, dispatch, title, category]);
+
 
   if (!task) {
     history.push("/task");

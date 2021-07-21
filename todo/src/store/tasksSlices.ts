@@ -33,7 +33,7 @@ const tasksSlice = createSlice({
       }>
     ) {
       const { description, title, category } = action.payload;
-      state.list.push({ id: state.list.length, description, title, category });
+      state.list.push({ id: state.list.length + 1, description, title, category });
     },
     changeTask(state, action: PayloadAction<Task>) {
       const { description, id, title, category } = action.payload;
