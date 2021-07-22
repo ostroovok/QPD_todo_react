@@ -7,13 +7,11 @@ import { useHistory, useRouteMatch } from "react-router-dom";
 import { Modal, TaskForm } from "../../components";
 import { RootState } from "../../store/store";
 import { addTask, changeTask } from "../../store/tasksSlices";
-import { TaskServices } from "../../services/TaskServices";
+import { taskServices } from "../../services/TaskServices/TaskServices";
 
 const TaskFormModule: React.FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-
-  const taskServices = new TaskServices();
 
   const {
     params: { id },
@@ -68,15 +66,22 @@ const TaskFormModule: React.FC = () => {
     history.push("./tasks");
   }, [history]);
 
-  taskServices.initialize();
-
   const onSubmitHandler = useCallback(() => {
     if (id === "new") {
+      taskServices.insert({
+        title: title,
+        categoryId: category,
+        description: description,
+      })
       dispatch(addTask({ title, description, category }));
-
-      taskServices.insert({title: title, categoryId: category, description: description});
-
     } else {
+
+      taskServices.update(+id, {
+        title: title,
+        description: description,
+        categoryId: category,
+      });
+
       dispatch(
         changeTask({
           title,
@@ -87,10 +92,8 @@ const TaskFormModule: React.FC = () => {
       );
     }
 
-
     history.push("./tasks");
   }, [history, description, id, dispatch, title, category]);
-
 
   if (!task) {
     history.push("/task");

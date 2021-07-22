@@ -5,6 +5,7 @@ import { List, Modal } from "../../components";
 import { RootState } from "../../store/store";
 import { delTask, Task } from "../../store/tasksSlices";
 import { useHistory } from "react-router-dom";
+import { TaskServices } from "../../services/TaskServices";
 
 const TaskModule: React.FC = () => {
   const history = useHistory();
