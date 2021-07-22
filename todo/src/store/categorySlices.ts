@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface Category {
+export interface Category {
   id: number;
   title: string;
   description: string;
@@ -9,26 +9,25 @@ interface Category {
 const initialState: {
   list: Category[];
 } = {
-  list: [
-    { id: 1, title: "category1", description: "description1" },
-    { id: 2, title: "category2", description: "description2" },
-    { id: 3, title: "category3", description: "description3" },
-  ],
+  list: [],
 };
 
 const categorySlice = createSlice({
   name: "categorySlice",
   initialState,
   reducers: {
+    init(state, action: PayloadAction<Category[]>){
+      state.list = action.payload;
+    }, 
     delCategory(state, action: PayloadAction<number>) {
       state.list = state.list.filter((c) => c.id !== action.payload);
     },
     addCategory(
       state,
-      action: PayloadAction<{ title: string; description: string }>
+      action: PayloadAction<{ title: string; description: string, id: number }>
     ) {
-      const { description, title } = action.payload;
-      state.list.push({ id: state.list.length + 1, description, title });
+      const { description, title, id } = action.payload;
+      state.list.push({ id, description, title });
     },
     changeCategory(state, action: PayloadAction<Category>) {
       const { description, id, title } = action.payload;
@@ -42,6 +41,6 @@ const categorySlice = createSlice({
   },
 });
 
-export const { delCategory, addCategory, changeCategory } =
+export const { delCategory, addCategory, changeCategory, init } =
   categorySlice.actions;
 export default categorySlice.reducer;

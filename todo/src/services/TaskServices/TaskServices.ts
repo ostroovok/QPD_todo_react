@@ -1,43 +1,40 @@
-type Task = {
-  title: string;
-  categoryId?: number;
-  description: string;
-};
+import { Task } from "../../store/tasksSlices";
 
 class TaskServices {
   private db?: IDBDatabase;
-  private request: IDBOpenDBRequest;
+  private request?: IDBOpenDBRequest;
   private storeName: string;
   private dbName: string;
 
   constructor(dbName: string, storeName: string) {
     this.dbName = dbName;
     this.storeName = storeName;
-
-    this.request = indexedDB.open(this.dbName);
-
-    this.request.onsuccess = () => {
-      this.db = this.request.result;
-    };
-
-    this.request.onupgradeneeded = () => {
-      this.db = this.request.result;
-      this.db.createObjectStore(this.storeName, {
-        keyPath: "id",
-        autoIncrement: true,
-      });
-    };
-    this.request.onerror = (error) => {
-      console.log("Initialize error", { error });
-    };
   }
 
-  initialize() {}
+  init() {
+    return new Promise<IDBOpenDBRequest>((resolve, reject) => {
+      let dbReq = indexedDB.open(this.dbName);
+      dbReq.onupgradeneeded = () => {
+        this.db = dbReq.result;
 
-  createStore() {
-    if (!this.db) {
-      return;
-    }
+        if (!this.db.objectStoreNames.contains(this.storeName)) {
+          const objectStore = this.db.createObjectStore(this.storeName, {
+            keyPath: "id",
+            autoIncrement: true,
+          });
+          
+          objectStore.createIndex('category_idx', 'category');
+          resolve(dbReq);
+        }
+      };
+      dbReq.onsuccess = () => {
+        this.db = dbReq.result;
+        resolve(dbReq);
+      };
+      dbReq.onerror = (error) => {
+        reject(error);
+      };
+    });
   }
 
   getObjectStore() {
@@ -52,10 +49,10 @@ class TaskServices {
   }
 
   getAllTasks = () => {
-    return new Promise((resolve, reject) => {
+    return new Promise<Task[]>((resolve, reject) => {
       const objectStore = this.getObjectStore();
       if (!objectStore) {
-        return reject("store or db is undefined");
+        return reject("#1 store or db is undefined");
       }
       const cursor = objectStore.openCursor();
       const items: Task[] = [];
@@ -72,11 +69,11 @@ class TaskServices {
     });
   };
 
-  insert(task: Task) {
+  insert(task: { title: string; description: string; category?: number }) {
     return new Promise((resolve, reject) => {
       const objectStore = this.getObjectStore();
       if (!objectStore) {
-        return reject("store or db is undefined");
+        return reject("#2 store or db is undefined");
       }
       const addRequest = objectStore.add(task);
       addRequest.onsuccess = () => {
@@ -93,7 +90,7 @@ class TaskServices {
     return new Promise((resolve, reject) => {
       const objectStore = this.getObjectStore();
       if (!objectStore) {
-        return reject("store or db is undefined");
+        return reject("#3 store or db is undefined");
       }
       const delRequest = objectStore.delete(id);
       delRequest.onsuccess = () => {
@@ -106,11 +103,38 @@ class TaskServices {
     });
   }
 
+  delCategoryId(id: number) {
+    return new Promise((resolve, reject) => {
+      const objectStore = this.getObjectStore();
+      if (!objectStore) {
+        return reject("#3.2 store or db is undefined");
+      }
+      const categoryindex = objectStore.index("category_idx");
+
+      const request = categoryindex.getAll(id);
+
+      request.onsuccess = () => {
+        const item = request.result[0];
+        if(!item){
+          reject('no items found with the given id');
+        }
+        this.update(item.id, {
+          title: item.title,
+          description: item.description,
+          id: item.id,
+          category: NaN,
+        });
+        const allItems = this.getAllTasks();
+        resolve(allItems);
+      };
+    });
+  }
+
   update(id: number, newTask: Task) {
     return new Promise((resolve, reject) => {
       const objectStore = this.getObjectStore();
       if (!objectStore) {
-        return reject("store or db is undefined");
+        return reject("#4 store or db is undefined");
       }
       const keyRange = IDBKeyRange.only(id);
       const cursor = objectStore.openCursor(keyRange);
@@ -126,7 +150,6 @@ class TaskServices {
         }
 
         const update = cursorWithValue.update(updateTo);
-
         update.onsuccess = () => {
           const allItems = this.getAllTasks();
           resolve(allItems);

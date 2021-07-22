@@ -3,8 +3,11 @@ import { useHistory } from "react-router-dom";
 import { CategoryTitle } from "./CategoryTitle";
 import { List, Modal } from "../../components";
 import { RootState } from "../../store/store";
-import { delCategory } from "../../store/categorySlices";
-import { useState } from "react";
+import { Category, delCategory } from "../../store/categorySlices";
+import { useEffect, useState } from "react";
+import { categoryServices } from "../../services/CategoryServices/CategoryServices";
+import { init } from "../../store/categorySlices";
+import { taskServices } from "../../services/TaskServices/TaskServices";
 
 const CategoriesModule: React.FC = () => {
   const history = useHistory();
@@ -16,7 +19,15 @@ const CategoriesModule: React.FC = () => {
     (state: RootState) => state.todos.categories.list
   );
 
-  const items = categories.map((c: any) => ({
+  useEffect(() => {
+    categoryServices.init().then(() => {
+      categoryServices.getAllCategories().then((categories) => {
+        dispatch(init(categories));
+      });
+    });
+  }, [dispatch]);
+
+  const items = categories.map((c: Category) => ({
     description: c.description,
     title: <CategoryTitle title={c.title} />,
     itemId: c.id,
@@ -50,6 +61,8 @@ const CategoriesModule: React.FC = () => {
             setIsOpen(false);
           }}
           onSubmit={() => {
+            categoryServices.delete(Number(categoryId));
+            taskServices.delCategoryId(Number(categoryId));
             dispatch(delCategory(Number(categoryId)));
 
             setCategoryId(undefined);

@@ -10,17 +10,16 @@ export interface Task {
 const initialState: {
   list: Task[];
 } = {
-  list: [
-    { id: 1, title: "task", description: "description1", category: 1 },
-    { id: 2, title: "task", description: "description2", category: 2 },
-    { id: 3, title: "task", description: "description3", category: 3 },
-  ],
+  list: [],
 };
 
 const tasksSlice = createSlice({
   name: "tasksSlice",
   initialState,
   reducers: {
+    init(state, action: PayloadAction<Task[]>){
+      state.list = action.payload;
+    },
     delTask(state, action: PayloadAction<number>) {
       state.list = state.list.filter((t) => t.id !== action.payload);
     },
@@ -33,7 +32,12 @@ const tasksSlice = createSlice({
       }>
     ) {
       const { description, title, category } = action.payload;
-      state.list.push({ id: state.list.length + 1, description, title, category });
+      state.list.push({
+        id: state.list.length + 1,
+        description,
+        title,
+        category,
+      });
     },
     changeTask(state, action: PayloadAction<Task>) {
       const { description, id, title, category } = action.payload;
@@ -48,5 +52,5 @@ const tasksSlice = createSlice({
   },
 });
 
-export const { delTask, addTask, changeTask } = tasksSlice.actions;
+export const { delTask, addTask, changeTask, init } = tasksSlice.actions;
 export default tasksSlice.reducer;

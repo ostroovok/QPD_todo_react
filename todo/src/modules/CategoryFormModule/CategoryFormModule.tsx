@@ -2,6 +2,7 @@ import { ChangeEventHandler, useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useRouteMatch } from "react-router-dom";
 import { CategoryForm, Modal } from "../../components";
+import { categoryServices } from "../../services/CategoryServices/CategoryServices";
 import { addCategory, changeCategory } from "../../store/categorySlices";
 import { RootState } from "../../store/store";
 
@@ -52,8 +53,27 @@ const CategoryFormModule: React.FC = () => {
 
   const onSubmitHandler = useCallback(() => {
     if (id === "new") {
-      dispatch(addCategory({ title, description }));
+      categoryServices
+        .insert({
+          title: title,
+          description: description,
+        })
+        .then((result) => {
+          dispatch(
+            addCategory({
+              title,
+              description,
+              id: result ? Number(result) : NaN,
+            })
+          );
+        });
     } else {
+      categoryServices.update(+id, {
+        id: +id,
+        title: title,
+        description: description,
+      });
+
       dispatch(changeCategory({ title, description, id: +id }));
     }
 

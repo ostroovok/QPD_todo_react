@@ -8,6 +8,7 @@ import { Modal, TaskForm } from "../../components";
 import { RootState } from "../../store/store";
 import { addTask, changeTask } from "../../store/tasksSlices";
 import { taskServices } from "../../services/TaskServices/TaskServices";
+import { randomInt } from "crypto";
 
 const TaskFormModule: React.FC = () => {
   const dispatch = useDispatch();
@@ -70,16 +71,17 @@ const TaskFormModule: React.FC = () => {
     if (id === "new") {
       taskServices.insert({
         title: title,
-        categoryId: category,
+        category: category,
         description: description,
       })
       dispatch(addTask({ title, description, category }));
     } else {
 
       taskServices.update(+id, {
+        id: +id,
         title: title,
         description: description,
-        categoryId: category,
+        category: category,
       });
 
       dispatch(
