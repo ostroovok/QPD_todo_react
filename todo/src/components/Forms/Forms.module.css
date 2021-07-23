@@ -11,11 +11,11 @@ fieldset.name1 {
   margin: 5px 10px;
   min-width: 48%;
 }
-fieldset.name2{
-    display: flex;
-    width: auto;
-    line-height: 20px;
-    margin: 5px 10px;
+fieldset.name2 {
+  display: flex;
+  width: auto;
+  line-height: 20px;
+  margin: 5px 10px;
 }
 fieldset.category {
   width: 350px;
@@ -48,7 +48,8 @@ select {
   border: none;
 }
 fieldset.category:hover,
-fieldset.name:hover,
+fieldset.name1:hover,
+fieldset.name2:hover,
 fieldset.description:hover {
   border: 2px solid #257fea;
 }
@@ -58,6 +59,7 @@ select {
   min-width: 45%;
   color: grey;
 }
+
 select:required:invalid {
   color: gray;
 }
@@ -74,5 +76,13 @@ option:hover {
       rgba(37, 127, 234, 0.3),
       rgba(37, 127, 234, 0.3)
     ),
-    #BFCBE3;
+    #bfcbe3;
+}
+
+.validationStar {
+  text-decoration-color:red;
+}
+
+fieldset:invalid{
+  border-color: red;
 }

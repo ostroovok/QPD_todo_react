@@ -1,5 +1,5 @@
 import { ChangeEventHandler } from "react";
-import styles from '../Forms.module.css'
+import styles from "../Forms.module.css";
 
 interface TaskFormProps {
   title: string;
@@ -18,25 +18,29 @@ const TaskForm: React.FC<TaskFormProps> = ({
   onChangeInput,
   onChangeCategory,
 }) => {
+
   return (
-    <form>
+    <form noValidate>
       <div>
         <fieldset className={styles["name1"]}>
           <legend>Имя</legend>
           <input
+            required={true}
             id="title"
             name="title"
             placeholder="Введите имя задачи"
             value={title}
             onChange={onChangeInput}
+            maxLength={255}
           ></input>
         </fieldset>
         <span>
           <fieldset className={styles["category"]}>
             <legend>Категория</legend>
             <select
-                id="category"
-                name="category"
+              required={true}
+              id="category"
+              name="category"
               value={
                 (selectedCategory &&
                   categories.find((c) => c.value === selectedCategory)
@@ -64,6 +68,8 @@ const TaskForm: React.FC<TaskFormProps> = ({
             placeholder="Введите описание задачи"
             value={description}
             onInput={onChangeInput}
+            required={true}
+            maxLength={1536}
           ></input>
         </fieldset>
       </div>

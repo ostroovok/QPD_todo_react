@@ -4,9 +4,8 @@ import { CategoryTitle } from "./CategoryTitle";
 import { List, Modal } from "../../components";
 import { RootState } from "../../store/store";
 import { Category, delCategory } from "../../store/categorySlices";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { categoryServices } from "../../services/CategoryServices/CategoryServices";
-import { init } from "../../store/categorySlices";
 import { taskServices } from "../../services/TaskServices/TaskServices";
 
 const CategoriesModule: React.FC = () => {
@@ -18,14 +17,6 @@ const CategoriesModule: React.FC = () => {
   const categories = useSelector(
     (state: RootState) => state.todos.categories.list
   );
-
-  useEffect(() => {
-    categoryServices.init().then(() => {
-      categoryServices.getAllCategories().then((categories) => {
-        dispatch(init(categories));
-      });
-    });
-  }, [dispatch]);
 
   const items = categories.map((c: Category) => ({
     description: c.description,

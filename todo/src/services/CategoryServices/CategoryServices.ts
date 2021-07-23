@@ -13,7 +13,11 @@ class CategoryServices {
 
   init() {
     return new Promise<IDBOpenDBRequest>((resolve, reject) => {
+      if(this.request){
+        return resolve(this.request);
+      }
       let dbReq = indexedDB.open(this.dbName);
+      this.request = dbReq;
       dbReq.onupgradeneeded = () => {
 
         this.db = dbReq.result;
@@ -23,11 +27,11 @@ class CategoryServices {
             keyPath: "id",
             autoIncrement: true,
           });
-          resolve(dbReq);
+          setTimeout(() => {resolve(dbReq)}, 3000);
       };
       dbReq.onsuccess = () => {
         this.db = dbReq.result;
-        resolve(dbReq);
+        setTimeout(() => {resolve(dbReq)}, 3000);
       };
       dbReq.onerror = (error) => {
         reject(error);

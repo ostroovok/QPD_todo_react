@@ -9,6 +9,7 @@ import { useHistory } from "react-router-dom";
 import { taskServices } from "../../services/TaskServices/TaskServices";
 import { Category } from "../../store/categorySlices";
 import { categoryServices } from "../../services/CategoryServices/CategoryServices";
+import { trackPromise } from "react-promise-tracker";
 
 const TaskModule: React.FC = () => {
   const history = useHistory();
@@ -16,23 +17,27 @@ const TaskModule: React.FC = () => {
   const [taskId, setTaskId] = useState<number | undefined>(undefined);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    taskServices.init().then(() => {
-      taskServices.getAllTasks().then((tasks) => {
-        dispatch(init(tasks));
-      });
-    });
-    categoryServices.init().then(() => {
-      categoryServices.getAllCategories().then((categories) => {
-        dispatch(catInit(categories));
-      });
-    });
-  }, [dispatch]);
-
   const [tasks, categories] = useSelector((state: RootState) => [
     state.todos.tasks.list,
     state.todos.categories.list,
   ]);
+
+  useEffect(() => {
+    trackPromise(
+      Promise.all([
+        taskServices.init().then(() => {
+          taskServices.getAllTasks().then((tasks) => {
+            dispatch(init(tasks));
+          });
+        }),
+        categoryServices.init().then(() => {
+          categoryServices.getAllCategories().then((categories) => {
+            dispatch(catInit(categories));
+          });
+        }),
+      ]).then()
+    );
+  }, [dispatch]);
 
   const items = tasks.map((t: Task) => {
     const categoryTitle = t.category

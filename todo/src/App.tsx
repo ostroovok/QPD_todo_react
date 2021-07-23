@@ -8,12 +8,25 @@ import "./App.css";
 import Categories from "./pages/Categories/Categories";
 import Tasks from "./pages/Tasks/Tasks";
 import { Header } from "./components";
+import { LoaderSpinner } from './components';
+import { usePromiseTracker } from "react-promise-tracker";
+
+const LoadingIndicator = () => {
+  const { promiseInProgress } = usePromiseTracker();
+
+  return (
+    <div>
+      {promiseInProgress && <LoaderSpinner />}
+    </div>
+  );
+};
 
 function App() {
   return (
     <div>
       <Router>
         <Header />
+        <LoadingIndicator />
         
         <Switch>
           <Route path="/tasks">

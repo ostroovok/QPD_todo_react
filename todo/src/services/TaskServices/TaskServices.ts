@@ -13,7 +13,12 @@ class TaskServices {
 
   init() {
     return new Promise<IDBOpenDBRequest>((resolve, reject) => {
-      let dbReq = indexedDB.open(this.dbName);
+      if(this.request){
+        return resolve(this.request);
+      }
+      
+      const dbReq = indexedDB.open(this.dbName);
+      this.request = dbReq;
       dbReq.onupgradeneeded = () => {
         this.db = dbReq.result;
 
@@ -24,12 +29,12 @@ class TaskServices {
           });
           
           objectStore.createIndex('category_idx', 'category');
-          resolve(dbReq);
+          setTimeout(() => {resolve(dbReq)}, 3000);
         }
       };
       dbReq.onsuccess = () => {
         this.db = dbReq.result;
-        resolve(dbReq);
+        setTimeout(() => {resolve(dbReq)}, 3000);
       };
       dbReq.onerror = (error) => {
         reject(error);
