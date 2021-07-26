@@ -1,28 +1,32 @@
-import React from "react";
+import React, { FocusEventHandler } from "react";
 import { useCallback } from "react";
 import { ChangeEventHandler } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useRouteMatch } from "react-router-dom";
-import { Modal, TaskForm } from "../../components";
-import { RootState } from "../../store/store";
-import { addTask, changeTask } from "../../store/tasksSlices";
-import { taskServices } from "../../services/TaskServices/TaskServices";
+import { Modal, TaskForm } from "src/components";
+import { RootState } from "src/store/store";
+import { addTask, changeTask } from "src/store/tasksSlices";
+import { taskServices } from "src/services/TaskServices/TaskServices";
+import { InputProps } from "src/types";
 
-const validationInput = (props: {title: string, description: string}): {titleVal: boolean, descriptionVal: boolean} => {
+const validationInput = (props: {
+  title: InputProps;
+  description: InputProps;
+}): { titleVal: boolean; descriptionVal: boolean } => {
   let result = {
     titleVal: true,
     descriptionVal: true,
-  }
-  if(props.title.replace(' ', '') === ''){
+  };
+  if (props.title.value.replace(" ", "") === "") {
     result.titleVal = false;
   }
-  if(props.description.replace(' ', '') === ''){
+  if (props.description.value.replace(" ", "") === "") {
     result.descriptionVal = false;
   }
 
   return result;
-}
+};
 
 const TaskFormModule: React.FC = () => {
   const dispatch = useDispatch();
@@ -43,10 +47,14 @@ const TaskFormModule: React.FC = () => {
     return state.todos.tasks.list.find((t) => t.id === +id);
   });
 
-  const [title, setTitle] = useState<string>(task?.title || "");
-  const [description, setDescription] = useState<string>(
-    task?.description || ""
-  );
+  const [title, setTitle] = useState<{ value: string; touched: boolean }>({
+    value: task?.title || "",
+    touched: false,
+  });
+  const [description, setDescription] = useState<{
+    value: string;
+    touched: boolean;
+  }>({ value: task?.description || "", touched: false });
   const [category, setCategory] = useState<number | undefined>(task?.category);
 
   const categories = useSelector(
@@ -55,12 +63,19 @@ const TaskFormModule: React.FC = () => {
 
   const onChangeHandler: ChangeEventHandler<HTMLInputElement> = useCallback(
     (event) => {
+      console.log(event.target.value.length > 0)
       switch (event.target.name) {
         case "title":
-          setTitle(event.target.value);
+          setTitle((state) => ({
+            value: event.target.value,
+            touched: state.touched || event.target.value.length > 0,
+          }));
           break;
         case "description":
-          setDescription(event.target.value);
+          setDescription((state) => ({
+            value: event.target.value,
+            touched: state.touched || event.target.value.length > 0,
+          }));
           break;
         case "category":
           setCategory(+event.target.value);
@@ -82,30 +97,39 @@ const TaskFormModule: React.FC = () => {
   }, [history]);
 
   const onSubmitHandler = useCallback(() => {
-    const {titleVal, descriptionVal} = validationInput({title, description})
-    if(!titleVal || !descriptionVal){
-      return {titleVal, descriptionVal};
+    const { titleVal, descriptionVal } = validationInput({
+      title,
+      description,
+    });
+    if (!titleVal || !descriptionVal) {
+      return null;
     }
 
     if (id === "new") {
       taskServices.insert({
-        title: title,
+        title: title.value,
         category: category,
-        description: description,
+        description: description.value,
       });
-      dispatch(addTask({ title, description, category }));
+      dispatch(
+        addTask({
+          title: title.value,
+          description: description.value,
+          category,
+        })
+      );
     } else {
       taskServices.update(+id, {
         id: +id,
-        title: title,
-        description: description,
+        title: title.value,
+        description: description.value,
         category: category,
       });
 
       dispatch(
         changeTask({
-          title,
-          description,
+          title: title.value,
+          description: description.value,
           id: +id,
           category,
         })

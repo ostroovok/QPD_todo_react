@@ -119,16 +119,19 @@ class TaskServices {
       const request = categoryindex.getAll(id);
 
       request.onsuccess = () => {
-        const item = request.result[0];
-        if(!item){
-          reject('no items found with the given id');
+        const items = request.result;
+        for (let index = 0; index < items.length; index++) {
+          const item = items[index];
+          if(!item){
+            reject('no items found with the given id');
+          }
+          this.update(item.id, {
+            title: item.title,
+            description: item.description,
+            id: item.id,
+            category: undefined,
+          });
         }
-        this.update(item.id, {
-          title: item.title,
-          description: item.description,
-          id: item.id,
-          category: NaN,
-        });
         const allItems = this.getAllTasks();
         resolve(allItems);
       };

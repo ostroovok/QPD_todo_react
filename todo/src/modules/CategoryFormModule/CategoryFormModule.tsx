@@ -1,10 +1,29 @@
 import { ChangeEventHandler, useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useRouteMatch } from "react-router-dom";
+import { InputProps } from "src/types";
 import { CategoryForm, Modal } from "../../components";
 import { categoryServices } from "../../services/CategoryServices/CategoryServices";
 import { addCategory, changeCategory } from "../../store/categorySlices";
 import { RootState } from "../../store/store";
+
+const validationInput = (props: {
+  title: InputProps;
+  description: InputProps;
+}): { titleVal: boolean; descriptionVal: boolean } => {
+  let result = {
+    titleVal: true,
+    descriptionVal: true,
+  };
+  if (props.title.value.replace(" ", "") === "") {
+    result.titleVal = false;
+  }
+  if (props.description.value.replace(" ", "") === "") {
+    result.descriptionVal = false;
+  }
+
+  return result;
+};
 
 const CategoryFormModule: React.FC = () => {
   const dispatch = useDispatch();
@@ -24,19 +43,29 @@ const CategoryFormModule: React.FC = () => {
 
   // ================== Секция: управление состоянием формы ========================
 
-  const [title, setTitle] = useState<string>(category?.title || "");
-  const [description, setDescription] = useState<string>(
-    category?.description || ""
-  );
+  const [title, setTitle] = useState<{ value: string; touched: boolean }>({
+    value: category?.title || "",
+    touched: false,
+  });
+  const [description, setDescription] = useState<{
+    value: string;
+    touched: boolean;
+  }>({ value: category?.description || "", touched: false });
 
   const onChangeHandler: ChangeEventHandler<HTMLInputElement> = useCallback(
     (event) => {
       switch (event.target.name) {
         case "title":
-          setTitle(event.target.value);
+          setTitle((state) => ({
+            value: event.target.value,
+            touched: state.touched || event.target.value.length > 0,
+          }));
           break;
         case "description":
-          setDescription(event.target.value);
+          setDescription((state) => ({
+            value: event.target.value,
+            touched: state.touched || event.target.value.length > 0,
+          }));
           break;
       }
     },
@@ -52,17 +81,25 @@ const CategoryFormModule: React.FC = () => {
   }, [history]);
 
   const onSubmitHandler = useCallback(() => {
+    const { titleVal, descriptionVal } = validationInput({
+      title,
+      description,
+    });
+    if (!titleVal || !descriptionVal) {
+      return null;
+    }
+
     if (id === "new") {
       categoryServices
         .insert({
-          title: title,
-          description: description,
+          title: title.value,
+          description: description.value,
         })
         .then((result) => {
           dispatch(
             addCategory({
-              title,
-              description,
+              title: title.value,
+              description: description.value,
               id: result ? Number(result) : NaN,
             })
           );
@@ -70,11 +107,17 @@ const CategoryFormModule: React.FC = () => {
     } else {
       categoryServices.update(+id, {
         id: +id,
-        title: title,
-        description: description,
+        title: title.value,
+        description: description.value,
       });
 
-      dispatch(changeCategory({ title, description, id: +id }));
+      dispatch(
+        changeCategory({
+          title: title.value,
+          description: description.value,
+          id: +id,
+        })
+      );
     }
 
     history.push("./categories");

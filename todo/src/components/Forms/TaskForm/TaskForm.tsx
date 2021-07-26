@@ -1,11 +1,12 @@
 import { ChangeEventHandler } from "react";
+import { InputProps } from "src/types";
 import styles from "../Forms.module.css";
 
 interface TaskFormProps {
-  title: string;
+  title: InputProps;
   selectedCategory?: number;
   categories: { label: string; value: number }[];
-  description: string;
+  description: InputProps;
   onChangeInput: ChangeEventHandler<HTMLInputElement>;
   onChangeCategory: ChangeEventHandler<HTMLSelectElement>;
 }
@@ -18,18 +19,17 @@ const TaskForm: React.FC<TaskFormProps> = ({
   onChangeInput,
   onChangeCategory,
 }) => {
-
   return (
     <form noValidate>
       <div>
         <fieldset className={styles["name1"]}>
           <legend>Имя</legend>
           <input
-            required={true}
+            required={title.touched && true}
             id="title"
             name="title"
             placeholder="Введите имя задачи"
-            value={title}
+            value={title.value}
             onChange={onChangeInput}
             maxLength={255}
           ></input>
@@ -66,9 +66,9 @@ const TaskForm: React.FC<TaskFormProps> = ({
             id="description"
             name="description"
             placeholder="Введите описание задачи"
-            value={description}
+            value={description.value}
             onInput={onChangeInput}
-            required={true}
+            required={description.touched && true}
             maxLength={1536}
           ></input>
         </fieldset>

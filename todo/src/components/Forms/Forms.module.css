@@ -39,6 +39,15 @@ fieldset legend {
   align-items: center;
   color: #3f72af;
 }
+
+fieldset:invalid legend{
+  color: red;
+}
+
+fieldset:invalid legend:before{
+  content: '*';
+}
+
 fieldset input,
 select {
   font-size: 12pt;
@@ -48,9 +57,9 @@ select {
   border: none;
 }
 fieldset.category:hover,
-fieldset.name1:hover,
-fieldset.name2:hover,
-fieldset.description:hover {
+fieldset.name1:hover:not(fieldset:invalid),
+fieldset.name2:hover:not(fieldset:invalid),
+fieldset.description:hover:not(fieldset:invalid) {
   border: 2px solid #257fea;
 }
 
